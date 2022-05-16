@@ -2,13 +2,13 @@ package com.eventsourcing.bookingservice.model;
 
 import java.util.Objects;
 
-public class FlightAvailabilityEvent extends Event {
+public class Booking extends Event {
     private String flightNumber;
     private String origin;
     private String destination;
     private String status;
 
-    public FlightAvailabilityEvent(String flightNumber, String origin, String destination) {
+    public Booking(String flightNumber, String origin, String destination) {
         this.flightNumber = flightNumber;
         this.origin = origin;
         this.destination = destination;
@@ -57,7 +57,7 @@ public class FlightAvailabilityEvent extends Event {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FlightAvailabilityEvent that = (FlightAvailabilityEvent) o;
+        Booking that = (Booking) o;
         return flightNumber.equals(that.flightNumber) && origin.equals(that.origin) && destination.equals(that.destination) && status.equals(that.status);
     }
 
@@ -68,7 +68,7 @@ public class FlightAvailabilityEvent extends Event {
 
     @Override
     public String toString() {
-        return "FlightAvailabilityEvent{" +
+        return "Booking{" +
                 "id=" + id +
                 ", created=" + created +
                 ", flightNumber='" + flightNumber + '\'' +

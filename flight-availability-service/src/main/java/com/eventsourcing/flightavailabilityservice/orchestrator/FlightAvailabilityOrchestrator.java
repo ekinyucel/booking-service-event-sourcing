@@ -1,6 +1,6 @@
 package com.eventsourcing.flightavailabilityservice.orchestrator;
 
-import com.eventsourcing.flightavailabilityservice.model.FlightAvailabilityEvent;
+import com.eventsourcing.bookingservice.model.Booking;
 import com.eventsourcing.flightavailabilityservice.service.FlightAvailabilityService;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +13,10 @@ public class FlightAvailabilityOrchestrator {
         this.flightAvailabilityService = flightAvailabilityService;
     }
 
-    public void orchestrate(FlightAvailabilityEvent flightAvailabilityEvent) {
+    public void orchestrate(Booking booking) {
         System.out.println("Checking flight availability");
 
-        boolean flightAvailability = flightAvailabilityService.checkFlightAvailability(flightAvailabilityEvent);
+        boolean flightAvailability = flightAvailabilityService.checkFlightAvailability(booking);
     }
 
 }

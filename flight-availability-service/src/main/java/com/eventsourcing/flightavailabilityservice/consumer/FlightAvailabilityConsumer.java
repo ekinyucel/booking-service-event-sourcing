@@ -1,14 +1,13 @@
 package com.eventsourcing.flightavailabilityservice.consumer;
 
+import com.eventsourcing.bookingservice.model.Booking;
 import com.eventsourcing.flightavailabilityservice.orchestrator.FlightAvailabilityOrchestrator;
-import com.eventsourcing.flightavailabilityservice.model.FlightAvailabilityEvent;
-import com.eventsourcing.flightavailabilityservice.model.Statuses;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
 
 @Component
-public class FlightAvailabilityConsumer implements Consumer<FlightAvailabilityEvent> {
+public class FlightAvailabilityConsumer implements Consumer<Booking> {
 
     private final FlightAvailabilityOrchestrator flightAvailabilityOrchestrator;
 
@@ -18,8 +17,8 @@ public class FlightAvailabilityConsumer implements Consumer<FlightAvailabilityEv
 
 
     @Override
-    public void accept(FlightAvailabilityEvent flightAvailabilityEvent) {
-        System.out.println("received " + flightAvailabilityEvent.getFlightNumber());
-        flightAvailabilityOrchestrator.orchestrate(flightAvailabilityEvent);
+    public void accept(Booking booking) {
+        System.out.println("received " + booking.getFlightNumber());
+        flightAvailabilityOrchestrator.orchestrate(booking);
     }
 }

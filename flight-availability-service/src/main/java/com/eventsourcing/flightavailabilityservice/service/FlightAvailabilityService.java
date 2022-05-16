@@ -1,7 +1,7 @@
 package com.eventsourcing.flightavailabilityservice.service;
 
-import com.eventsourcing.flightavailabilityservice.model.FlightAvailabilityEvent;
-import com.eventsourcing.flightavailabilityservice.model.Statuses;
+import com.eventsourcing.bookingservice.model.Booking;
+import com.eventsourcing.bookingservice.model.Statuses;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,11 +16,11 @@ public class FlightAvailabilityService {
         flightAvailability.put("KL1523", 10);
     }
 
-    public boolean checkFlightAvailability(FlightAvailabilityEvent flightAvailabilityEvent) {
+    public boolean checkFlightAvailability(Booking booking) {
         boolean result = false;
 
-        if (flightAvailabilityEvent.getStatus().equals(Statuses.FLIGHT_PENDING.name())) {
-            String flightNumber = flightAvailabilityEvent.getFlightNumber();
+        if (booking.getStatus().equals(Statuses.FLIGHT_PENDING.name())) {
+            String flightNumber = booking.getFlightNumber();
 
             if (flightAvailability.get(flightNumber) > 0) {
                 result = true;

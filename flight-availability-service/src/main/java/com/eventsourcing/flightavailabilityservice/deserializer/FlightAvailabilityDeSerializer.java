@@ -1,20 +1,20 @@
 package com.eventsourcing.flightavailabilityservice.deserializer;
 
-import com.eventsourcing.flightavailabilityservice.model.FlightAvailabilityEvent;
+import com.eventsourcing.bookingservice.model.Booking;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.io.IOException;
 
-public class FlightAvailabilityDeSerializer implements Deserializer<FlightAvailabilityEvent> {
+public class FlightAvailabilityDeSerializer implements Deserializer<Booking> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public FlightAvailabilityEvent deserialize(String topic, byte[] data) {
+    public Booking deserialize(String topic, byte[] data) {
         try {
-            return objectMapper.readValue(new String(data), FlightAvailabilityEvent.class);
+            return objectMapper.readValue(new String(data), Booking.class);
         } catch (IOException e) {
             throw new SerializationException(e);
         }

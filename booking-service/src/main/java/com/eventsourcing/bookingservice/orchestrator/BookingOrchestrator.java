@@ -1,6 +1,6 @@
 package com.eventsourcing.bookingservice.orchestrator;
 
-import com.eventsourcing.bookingservice.model.FlightAvailabilityEvent;
+import com.eventsourcing.bookingservice.model.Booking;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class BookingOrchestrator {
     }
 
     public void orchestrate() {
-        FlightAvailabilityEvent flightAvailabilityEvent = new FlightAvailabilityEvent("KL1523", "AMS", "IST");
+        Booking flightAvailabilityEvent = new Booking("KL1523", "AMS", "IST");
         streamBridge.send("booking-flight-availability-out-0", flightAvailabilityEvent);
     }
 
