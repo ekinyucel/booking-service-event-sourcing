@@ -6,13 +6,14 @@ public class Booking extends Event {
     private String flightNumber;
     private String origin;
     private String destination;
-    private String status;
+    private String status = Statuses.FLIGHT_PENDING.name();
+
+    public Booking() {}
 
     public Booking(String flightNumber, String origin, String destination) {
         this.flightNumber = flightNumber;
         this.origin = origin;
         this.destination = destination;
-        this.setStatus(Statuses.FLIGHT_PENDING.name());
     }
 
     public String getFlightNumber() {

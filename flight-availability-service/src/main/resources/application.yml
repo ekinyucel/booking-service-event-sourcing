@@ -1,21 +1,10 @@
 spring:
-  cloud:
-    function:
-      definition: consumer
-    stream:
-      kafka:
-        bindings:
-          consumer-in-0:
-            consumer:
-              configuration:
-                value.deserializer: com.eventsourcing.flightavailabilityservice.deserializer.FlightAvailabilityDeSerializer
-        binder:
-          brokers: localhost:9092
-      bindings:
-        consumer-in-0:
-          destination: booking-flight-availability
-          consumer:
-            use-native-decoding: true
-
+  application:
+    name: flightavailabilityservice
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.eventsourcing.flightavailabilityservice.deserializer.FlightAvailabilityDeSerializer
 server:
   port: 8081

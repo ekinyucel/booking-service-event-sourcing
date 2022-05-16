@@ -1,20 +1,10 @@
 server:
   port: 8089
 spring:
-  cloud:
-    function:
-      definition: producer
-    stream:
-      kafka:
-        bindings:
-          booking-flight-availability-out-0:
-            producer:
-              configuration:
-                value.serializer: com.eventsourcing.bookingservice.serializer.MessageSerializer
-        binder:
-          brokers: localhost:9092
-      bindings:
-        booking-flight-availability-out-0:
-          destination: booking-flight-availability
-          producer:
-            useNativeEncoding: true
+  application:
+    name: bookingservice
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.eventsourcing.bookingservice.serializer.MessageSerializer

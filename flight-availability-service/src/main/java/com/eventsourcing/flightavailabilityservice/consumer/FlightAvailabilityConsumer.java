@@ -2,12 +2,11 @@ package com.eventsourcing.flightavailabilityservice.consumer;
 
 import com.eventsourcing.bookingservice.model.Booking;
 import com.eventsourcing.flightavailabilityservice.orchestrator.FlightAvailabilityOrchestrator;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Consumer;
-
 @Component
-public class FlightAvailabilityConsumer implements Consumer<Booking> {
+public class FlightAvailabilityConsumer {
 
     private final FlightAvailabilityOrchestrator flightAvailabilityOrchestrator;
 
@@ -15,8 +14,7 @@ public class FlightAvailabilityConsumer implements Consumer<Booking> {
         this.flightAvailabilityOrchestrator = flightAvailabilityOrchestrator;
     }
 
-
-    @Override
+    @KafkaListener(id = "booking-flight-availability", topics = "booking-flight-availability")
     public void accept(Booking booking) {
         System.out.println("received " + booking.getFlightNumber());
         flightAvailabilityOrchestrator.orchestrate(booking);

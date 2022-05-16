@@ -2,6 +2,8 @@ package com.eventsourcing.flightavailabilityservice.service;
 
 import com.eventsourcing.bookingservice.model.Booking;
 import com.eventsourcing.bookingservice.model.Statuses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -9,6 +11,8 @@ import java.util.Map;
 
 @Service
 public class FlightAvailabilityService {
+
+    private final Logger logger = LoggerFactory.getLogger(FlightAvailabilityService.class);
 
     private final Map<String, Integer> flightAvailability = new HashMap<>();
 
@@ -22,10 +26,12 @@ public class FlightAvailabilityService {
         if (booking.getStatus().equals(Statuses.FLIGHT_PENDING.name())) {
             String flightNumber = booking.getFlightNumber();
 
-            if (flightAvailability.get(flightNumber) > 0) {
+            // TODO handle exception handling. whe npe or any exception occurs kafka library keeps trying to enter the processing logic
+            int availableSeats = flightAvailability.getOrDefault(flightNumber, 0);
+            if (availableSeats > 0) {
                 result = true;
             } else {
-                System.out.println("there is no available allocated seat in this flight");
+                logger.info("there is no available allocated seat in this flight");
             }
         }
 
