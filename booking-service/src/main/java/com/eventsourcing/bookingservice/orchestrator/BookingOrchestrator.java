@@ -1,12 +1,15 @@
 package com.eventsourcing.bookingservice.orchestrator;
 
 import com.eventsourcing.bookingservice.model.Booking;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookingOrchestrator {
 
+    private static final Logger logger = LoggerFactory.getLogger(BookingOrchestrator.class);
     private final KafkaTemplate<String, Booking> kafkaTemplate;
 
     public BookingOrchestrator(KafkaTemplate<String, Booking> kafkaTemplate) {
@@ -14,7 +17,7 @@ public class BookingOrchestrator {
     }
 
     public void orchestrate(Booking booking) {
+        logger.info("Creating an event for the flight availability service");
         kafkaTemplate.send("booking-flight-availability", booking.id, booking);
     }
-
 }

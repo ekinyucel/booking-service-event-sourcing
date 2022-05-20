@@ -14,7 +14,7 @@ public class FlightAvailabilityProducer {
     }
 
     public void produceEvent(Booking booking) {
-        kafkaTemplate.send("flight-availability-result", booking.id, booking);
+        kafkaTemplate.send("flight-availability-result", booking);
     }
 
 }

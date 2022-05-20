@@ -1,8 +1,12 @@
 package com.eventsourcing.bookingservice.model;
 
+import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
-public class Booking extends Event {
+public class Booking {
+    public String id = UUID.randomUUID().toString();
+    public final Date created = new Date();
     private String flightNumber;
     private String origin;
     private String destination;
@@ -14,6 +18,18 @@ public class Booking extends Event {
         this.flightNumber = flightNumber;
         this.origin = origin;
         this.destination = destination;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Date getCreated() {
+        return created;
     }
 
     public String getFlightNumber() {
@@ -59,12 +75,12 @@ public class Booking extends Event {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking that = (Booking) o;
-        return flightNumber.equals(that.flightNumber) && origin.equals(that.origin) && destination.equals(that.destination) && status.equals(that.status);
+        return id.equals(that.id) && flightNumber.equals(that.flightNumber) && origin.equals(that.origin) && destination.equals(that.destination) && status.equals(that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(flightNumber, origin, destination, status);
+        return Objects.hash(id, flightNumber, origin, destination, status);
     }
 
     @Override
