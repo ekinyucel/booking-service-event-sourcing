@@ -9,5 +9,5 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: com.eventsourcing.bookingservice.serializer.MessageSerializer
     consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: com.eventsourcing.bookingservice.deserializer.StringDeserializer
       value-deserializer: com.eventsourcing.bookingservice.deserializer.MessageDeserializer

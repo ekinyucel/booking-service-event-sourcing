@@ -27,7 +27,7 @@ public class BookingServiceConfiguration {
     public KStream<String, Booking> stream(StreamsBuilder builder) {
         JsonSerde<Booking> bookingSerde = new JsonSerde<>(Booking.class);
         KStream<String, Booking> stream = builder.stream("flight-availability-result", Consumed.with(Serdes.String(), bookingSerde));
-        stream.foreach((k, v) -> bookingPaymentService.handlePayment(v));
+        stream.foreach(bookingPaymentService::handlePayment);
         return stream;
     }
 

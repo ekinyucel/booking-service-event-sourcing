@@ -2,7 +2,7 @@ version: '2'
 services:
   kafdrop:
     image: obsidiandynamics/kafdrop:3.8.1
-    ##platform: linux/amd64
+    platform: linux/amd64
     container_name: kafdrop
     depends_on:
       - zookeeper
@@ -17,7 +17,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
-    ##platform: linux/amd64
+    platform: linux/amd64
     container_name: zookeeper
     ports:
       - 2181:2181
@@ -27,7 +27,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:latest
-    ##platform: linux/amd64
+    platform: linux/amd64
     container_name: kafka
     depends_on:
       - zookeeper
