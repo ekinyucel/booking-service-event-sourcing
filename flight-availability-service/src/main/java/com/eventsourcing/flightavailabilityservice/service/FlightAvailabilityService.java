@@ -30,6 +30,7 @@ public class FlightAvailabilityService {
             int availableSeats = flightAvailability.getOrDefault(flightNumber, 0);
             if (availableSeats > 0) {
                 result = true;
+                logger.info("there is available seat in this flight");
             } else {
                 logger.info("there is no available allocated seat in this flight");
             }

@@ -10,8 +10,9 @@ public class BookingPaymentService {
 
     private static final Logger logger = LoggerFactory.getLogger(BookingPaymentService.class);
 
-    public void handlePayment(String key, Booking booking) {
-        logger.info("key " + key + " " + booking.toString());
+    public Booking handlePayment(Booking flightAvailability, Booking bookingAvailability) {
+        logger.info("flightAvailability " + flightAvailability.toString() + " bookingAvailability " + bookingAvailability.toString());
+        return flightAvailability;
     }
 
 }
