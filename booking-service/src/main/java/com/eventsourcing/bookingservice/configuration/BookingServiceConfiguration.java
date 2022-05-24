@@ -21,6 +21,7 @@ public class BookingServiceConfiguration {
     private static final String BOOKINGS = "bookings";
     private static final String BOOKING_FLIGHT_AVAILABILITY = "booking-flight-availability";
     private static final String FLIGHT_AVAILABILITY_RESULT = "flight-availability-result";
+    private static final String BOOKING_PAYMENT_ISSUE = "booking-payment-issue";
 
     @Bean
     public NewTopic bookings() {
@@ -47,7 +48,15 @@ public class BookingServiceConfiguration {
     }
 
     @Bean
-    public KStream<String, Booking> stream(StreamsBuilder builder) {
+    public NewTopic bookingPaymentAvailability() {
+        return TopicBuilder.name(BOOKING_PAYMENT_ISSUE)
+                .partitions(1)
+                .compact()
+                .build();
+    }
+
+    @Bean
+    public KStream<String, Booking> flightAvailabilityStream(StreamsBuilder builder) {
         JsonSerde<Booking> bookingSerde = new JsonSerde<>(Booking.class);
         KStream<String, Booking> stream = builder.stream(FLIGHT_AVAILABILITY_RESULT, Consumed.with(Serdes.String(), bookingSerde));
         stream.to(BOOKINGS);

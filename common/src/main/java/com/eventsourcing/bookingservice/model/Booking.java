@@ -59,7 +59,8 @@ public class Booking {
     public void setStatus(String status) {
         if (status.equals(Statuses.FLIGHT_PENDING.name())
                 || status.equals(Statuses.FLIGHT_AVAILABLE.name())
-                || status.equals(Statuses.FLIGHT_NOT_AVAILABLE.name())) {
+                || status.equals(Statuses.FLIGHT_NOT_AVAILABLE.name())
+                || status.equals(Statuses.PAYMENT_REQUESTED.name())) {
             this.status = status;
         } else {
             throw new IllegalArgumentException("It is not possible to set the flight availability event's status to " + status);
