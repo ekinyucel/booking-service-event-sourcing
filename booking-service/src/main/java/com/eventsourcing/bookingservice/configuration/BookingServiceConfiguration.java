@@ -1,7 +1,6 @@
 package com.eventsourcing.bookingservice.configuration;
 
 import com.eventsourcing.bookingservice.model.Booking;
-import com.eventsourcing.bookingservice.service.BookingPaymentService;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -16,20 +15,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.support.serializer.JsonSerde;
 
-import java.time.Duration;
-
 @Configuration
 public class BookingServiceConfiguration {
 
-    private final BookingPaymentService bookingPaymentService;
-
-    public BookingServiceConfiguration(BookingPaymentService bookingPaymentService) {
-        this.bookingPaymentService = bookingPaymentService;
-    }
+    private static final String BOOKINGS = "bookings";
+    private static final String BOOKING_FLIGHT_AVAILABILITY = "booking-flight-availability";
+    private static final String FLIGHT_AVAILABILITY_RESULT = "flight-availability-result";
 
     @Bean
     public NewTopic bookings() {
-        return TopicBuilder.name("bookings")
+        return TopicBuilder.name(BOOKINGS)
                 .partitions(1)
                 .compact()
                 .build();
@@ -37,7 +32,7 @@ public class BookingServiceConfiguration {
 
     @Bean
     public NewTopic bookingFlightAvailability() {
-        return TopicBuilder.name("booking-flight-availability")
+        return TopicBuilder.name(BOOKING_FLIGHT_AVAILABILITY)
                 .partitions(1)
                 .compact()
                 .build();
@@ -45,7 +40,7 @@ public class BookingServiceConfiguration {
 
     @Bean
     public NewTopic flightAvailabilityResultTopic() {
-        return TopicBuilder.name("flight-availability-result")
+        return TopicBuilder.name(FLIGHT_AVAILABILITY_RESULT)
                 .partitions(1)
                 .compact()
                 .build();
@@ -54,16 +49,16 @@ public class BookingServiceConfiguration {
     @Bean
     public KStream<String, Booking> stream(StreamsBuilder builder) {
         JsonSerde<Booking> bookingSerde = new JsonSerde<>(Booking.class);
-        KStream<String, Booking> stream = builder.stream("flight-availability-result", Consumed.with(Serdes.String(), bookingSerde));
-        stream.to("bookings");
+        KStream<String, Booking> stream = builder.stream(FLIGHT_AVAILABILITY_RESULT, Consumed.with(Serdes.String(), bookingSerde));
+        stream.to(BOOKINGS);
         return stream;
     }
 
     @Bean
     public KTable<String, Booking> table(StreamsBuilder builder) {
-        KeyValueBytesStoreSupplier store = Stores.persistentKeyValueStore("bookings");
+        KeyValueBytesStoreSupplier store = Stores.persistentKeyValueStore(BOOKINGS);
         JsonSerde<Booking> bookingSerde = new JsonSerde<>(Booking.class);
-        KStream<String, Booking> stream = builder.stream("bookings", Consumed.with(Serdes.String(), bookingSerde));
+        KStream<String, Booking> stream = builder.stream(BOOKINGS, Consumed.with(Serdes.String(), bookingSerde));
         return stream.toTable(Materialized.<String,Booking>as(store)
                 .withKeySerde(Serdes.String())
                 .withValueSerde(bookingSerde));
