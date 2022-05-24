@@ -1,6 +1,7 @@
 package com.eventsourcing.bookingservice.controller;
 
 import com.eventsourcing.bookingservice.model.Booking;
+import com.eventsourcing.bookingservice.model.BookingResponse;
 import com.eventsourcing.bookingservice.orchestrator.BookingOrchestrator;
 import com.eventsourcing.bookingservice.service.BookingStoreService;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,8 @@ public class BookingController {
     }
 
     @PostMapping("/createBooking")
-    public ResponseEntity<String> createBooking(@RequestBody Booking booking) {
-        bookingOrchestrator.orchestrate(booking);
-        return new ResponseEntity<>("success", HttpStatus.OK);
+    public BookingResponse createBooking(@RequestBody Booking aBooking) {
+        return bookingOrchestrator.orchestrate(aBooking);
     }
 
     @GetMapping("/all")

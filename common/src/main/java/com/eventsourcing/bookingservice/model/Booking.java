@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Booking {
-    public String id = UUID.randomUUID().toString();
+    public final String id = UUID.randomUUID().toString();
     public final Date created = new Date();
     private String flightNumber;
     private String origin;
@@ -22,10 +22,6 @@ public class Booking {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Date getCreated() {

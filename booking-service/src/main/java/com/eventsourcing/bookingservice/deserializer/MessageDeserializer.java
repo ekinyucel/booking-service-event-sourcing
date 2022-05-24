@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class MessageDeserializer implements Deserializer<Booking> {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public Booking deserialize(String topic, byte[] data) {

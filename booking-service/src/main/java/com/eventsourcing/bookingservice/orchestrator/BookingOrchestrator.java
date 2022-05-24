@@ -1,6 +1,7 @@
 package com.eventsourcing.bookingservice.orchestrator;
 
 import com.eventsourcing.bookingservice.model.Booking;
+import com.eventsourcing.bookingservice.model.BookingResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,8 +17,11 @@ public class BookingOrchestrator {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void orchestrate(Booking booking) {
+    public BookingResponse orchestrate(Booking booking) {
         logger.info("Creating an event for the flight availability service");
         kafkaTemplate.send("booking-flight-availability", booking.id, booking);
+        BookingResponse bookingResponse = new BookingResponse();
+        bookingResponse.setId(booking.id);
+        return bookingResponse;
     }
 }
