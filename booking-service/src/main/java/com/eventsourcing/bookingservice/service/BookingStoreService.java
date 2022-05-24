@@ -10,7 +10,6 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -35,6 +34,19 @@ public class BookingStoreService {
         }
         bookings.sort(Comparator.comparing(Booking::getCreated).reversed());
         return bookings;
+    }
+
+    public Booking fetchBookingEvent(String bookingId) {
+        Booking booking = null;
+
+        KafkaStreams kafkaStreams = kafkaStreamsFactory
+                .getKafkaStreams();
+
+        if (null != kafkaStreams) {
+            booking = (Booking) kafkaStreams.store(StoreQueryParameters.fromNameAndType("bookings", QueryableStoreTypes.keyValueStore())).get(bookingId);
+        }
+
+        return booking;
     }
 
 }
